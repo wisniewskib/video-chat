@@ -1,7 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import Notifications from "./components/Notifications";
+import Options from "./components/Options";
+import VideoPlayer from "./components/VideoPlayer";
+import { SocketContext } from "./context/SocketContext";
 
 function App() {
-	return <button className="btn"> Daisy UI button</button>;
+	return (
+		<div>
+			<h1>test</h1>
+			<VideoPlayer />
+			<Options>
+				<Notifications />
+			</Options>
+		</div>
+	);
 }
 
 export default App;
