@@ -12,8 +12,8 @@ const Options = ({ idToCall, setIdToCall }: Props) => {
 	const { myId, callAccepted, callEnded, leaveCall, handleNameChange, callUser, activeUsers } = useContext(SocketContext) as SocketContextProps;
 
 	return (
-		<div className="flex ">
-			<div className="form-control w-96 mr-2">
+		<div className="flex flex-col lg:flex-row ">
+			<div className="form-control w-full  sm:w-96 lg:mr-2">
 				<label className="input-group" htmlFor="name">
 					<span>Name</span>
 					<input className="input input-bordered w-full" type="text" id="name" onChange={(e) => setMyName(e.target.value)} />
@@ -23,7 +23,7 @@ const Options = ({ idToCall, setIdToCall }: Props) => {
 				</button>
 			</div>
 			<br />
-			<div className="form-control w-96">
+			<div className="form-control w-full sm:w-96">
 				<label className="input-group" htmlFor="id-to-call">
 					<span>Recipient</span>
 					<input
@@ -35,7 +35,7 @@ const Options = ({ idToCall, setIdToCall }: Props) => {
 					/>
 				</label>
 				{callAccepted && !callEnded ? (
-					<button className="btn" onClick={leaveCall}>
+					<button className="btn mt-2" onClick={leaveCall}>
 						Leave call
 					</button>
 				) : (

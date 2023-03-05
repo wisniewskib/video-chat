@@ -9,14 +9,13 @@ const VideoPlayer = (props: Props) => {
 		if (mediaStream) {
 			return (
 				<video
+					className="rounded-lg"
 					ref={(video) => {
 						if (video) video.srcObject = myVideo.current.srcObject;
 					}}
 					muted
 					playsInline
 					autoPlay
-					width="640"
-					height="480"
 				/>
 			);
 		}
@@ -26,35 +25,39 @@ const VideoPlayer = (props: Props) => {
 	const userVideoElement = useMemo(() => {
 		if (callAccepted && !callEnded) {
 			return (
-				<video
-					ref={(video) => {
-						if (video && userVideo.current) video.srcObject = userVideo.current.srcObject;
-					}}
-					playsInline
-					autoPlay
-					muted
-				/>
+				<div className="relative ">
+					<video
+						className="rounded-lg"
+						ref={(video) => {
+							if (video && userVideo.current) video.srcObject = userVideo.current.srcObject;
+						}}
+						playsInline
+						autoPlay
+						muted
+					/>
+					<div className="absolute bottom-2 right-2 w-32 shadow-md">{myVideoElement}</div>
+				</div>
 			);
 		}
 		return null;
 	}, [callAccepted, userVideo.current.srcObject]);
 
 	return (
-		<div className="flex mb-8">
-			<div className={`card w-96 bg-base-100 shadow-xl ${callAccepted && "mr-4"} mr-2`}>
-				<div className="card-body items-center ">
+		<div className={`flex mb-8 ${!callAccepted && "video-card"}`}>
+			<div className={`card w-full  bg-base-100 shadow-xl  lg:mr-2`}>
+				<div className="card-body items-center">
 					<h3 className="mb-4 text-2xl">{name || "Your Video"}</h3>
-					{myVideoElement}
+					{callAccepted ? userVideoElement : myVideoElement}
 				</div>
 			</div>
-			{callAccepted && (
-				<div className="card w-96 bg-base-100 shadow-xl">
+			{/* {callAccepted && (
+				<div className="card w-full  bg-base-100 shadow-xl video-card">
 					<div className="card-body items-center">
 						<h3 className="mb-4 text-2xl">{call?.name || "Caller"}</h3>
 						{userVideoElement}
 					</div>
 				</div>
-			)}
+			)} */}
 		</div>
 	);
 };

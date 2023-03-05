@@ -8,9 +8,9 @@ import { SocketContext } from "./context/SocketContext";
 function App() {
 	const [idToCall, setIdToCall] = useState<string>("");
 	return (
-		<div className="flex flex-col items-center container">
+		<div className="flex flex-col items-center mx-4">
 			<Notifications />
-			<div className="flex video-container">
+			<div className="flex flex-col lg:flex-row video-container">
 				<VideoPlayer />
 				<ActiveUsers setIdToCall={setIdToCall} />
 			</div>

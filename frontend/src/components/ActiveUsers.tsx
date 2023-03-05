@@ -6,9 +6,12 @@ type Props = {
 };
 
 const ActiveUsers = ({ setIdToCall }: Props) => {
-	const { myId, callAccepted, callEnded, leaveCall, handleNameChange, callUser, activeUsers } = useContext(SocketContext) as SocketContextProps;
+	const { myId, callAccepted, activeUsers } = useContext(SocketContext) as SocketContextProps;
+	if (callAccepted) {
+		return <></>;
+	}
 	return (
-		<div className="card w-96 bg-base-100 shadow-xl mb-8">
+		<div className="card w-full lg:w-96 bg-base-100 shadow-xl mb-8 ">
 			<h3 className="text-center my-2 text-xl">Select user and click "Call" </h3>
 			<ul className="menu bg-base-100 rounded-box overflow-y-auto max-h-auto flex-nowrap">
 				{activeUsers.map(
