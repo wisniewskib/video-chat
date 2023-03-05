@@ -103,11 +103,10 @@ const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
 			peer.on("stream", (currentStream) => {
 				userVideo.current.srcObject = currentStream;
+				setCallAccepted(true);
 			});
 
 			socket.on("callaccepted", (signal) => {
-				setCallAccepted(true);
-
 				peer.signal(signal);
 			});
 

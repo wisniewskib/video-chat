@@ -35,7 +35,7 @@ const Options = ({ idToCall, setIdToCall }: Props) => {
 					/>
 				</label>
 				{callAccepted && !callEnded ? (
-					<button className="btn mt-2" onClick={leaveCall}>
+					<button className="btn btn-error mt-2" onClick={leaveCall}>
 						Leave call
 					</button>
 				) : (

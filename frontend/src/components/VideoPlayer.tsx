@@ -25,7 +25,7 @@ const VideoPlayer = (props: Props) => {
 	const userVideoElement = useMemo(() => {
 		if (callAccepted && !callEnded) {
 			return (
-				<div className="relative ">
+				<div className="relative w-full ">
 					<video
 						className="rounded-lg"
 						ref={(video) => {
@@ -34,6 +34,8 @@ const VideoPlayer = (props: Props) => {
 						playsInline
 						autoPlay
 						muted
+						width="640"
+						height="480"
 					/>
 					<div className="absolute bottom-2 right-2 w-32 shadow-md">{myVideoElement}</div>
 				</div>
@@ -50,14 +52,6 @@ const VideoPlayer = (props: Props) => {
 					{callAccepted ? userVideoElement : myVideoElement}
 				</div>
 			</div>
-			{/* {callAccepted && (
-				<div className="card w-full  bg-base-100 shadow-xl video-card">
-					<div className="card-body items-center">
-						<h3 className="mb-4 text-2xl">{call?.name || "Caller"}</h3>
-						{userVideoElement}
-					</div>
-				</div>
-			)} */}
 		</div>
 	);
 };
