@@ -4,6 +4,11 @@ import Peer from "simple-peer";
 
 const socket = io(import.meta.env.VITE_SOCKET_IO_URL);
 
+export interface User {
+	id: string;
+	name?: string;
+}
+
 export interface SocketContextProps {
 	call: {
 		isReceivedCall: boolean;
@@ -16,12 +21,13 @@ export interface SocketContextProps {
 	userVideo: React.MutableRefObject<{ srcObject: null | MediaStream }>;
 	mediaStream: null | MediaStream;
 	name: string;
-	setName: React.Dispatch<React.SetStateAction<string>>;
+	handleNameChange: (newName: string) => void;
 	callEnded: boolean;
 	myId: string;
 	callUser: (id: string) => void;
 	leaveCall: () => void;
 	answerCall: () => void;
+	activeUsers: User[];
 }
 
 export const SocketContext = createContext<SocketContextProps | null>(null);
@@ -33,6 +39,7 @@ const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 	const [callAccepted, setCallAccepted] = useState<boolean>(false);
 	const [callEnded, setCallEnded] = useState<boolean>(false);
 	const [name, setName] = useState<string>("");
+	const [activeUsers, setActiveUsers] = useState<User[]>([]);
 
 	const myVideo = useRef<{ srcObject: null | MediaStream }>({ srcObject: null });
 	const userVideo = useRef<{ srcObject: null | MediaStream }>({ srcObject: null });
@@ -51,12 +58,23 @@ const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
 		socket.on("me", (id) => setMyId(id));
 
-		socket.on("calluser", ({ signalData, from, name }) => setCall({ isReceivedCall: true, from, name, signal: signalData }));
+		socket.on("calluser", ({ signal, from, name }) => setCall({ isReceivedCall: true, from, name, signal: signal }));
+
+		socket.on("callended", () => {
+			leaveCall();
+		});
+
+		socket.on("users", (users) => {
+			setActiveUsers(users);
+		});
 	}, []);
 
-	const answerCall = () => {
-		setCallAccepted(true);
+	const handleNameChange = (newName: string) => {
+		setName(newName);
+		socket.emit("update-name", { name: newName, id: myId });
+	};
 
+	const answerCall = () => {
 		if (mediaStream && call) {
 			const peer = new Peer({ initiator: false, trickle: false, stream: mediaStream });
 
@@ -66,6 +84,7 @@ const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
 			peer.on("stream", (currentStream) => {
 				userVideo.current.srcObject = currentStream;
+				setCallAccepted(true);
 			});
 
 			peer.signal(call.signal);
@@ -75,7 +94,7 @@ const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 	};
 
 	const callUser = (id: string) => {
-		if (mediaStream && call) {
+		if (mediaStream) {
 			const peer = new Peer({ initiator: true, trickle: false, stream: mediaStream });
 
 			peer.on("signal", (data) => {
@@ -111,12 +130,13 @@ const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 				userVideo,
 				mediaStream,
 				name,
-				setName,
+				handleNameChange,
 				callEnded,
 				myId,
 				callUser,
 				leaveCall,
 				answerCall,
+				activeUsers,
 			}}>
 			{children}
 		</SocketContext.Provider>

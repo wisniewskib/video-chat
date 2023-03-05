@@ -6,12 +6,10 @@ import { SocketContext } from "./context/SocketContext";
 
 function App() {
 	return (
-		<div>
-			<h1>test</h1>
+		<div className="flex flex-col items-center container">
+			<Notifications />
 			<VideoPlayer />
-			<Options>
-				<Notifications />
-			</Options>
+			<Options />
 		</div>
 	);
 }
