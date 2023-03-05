@@ -4,20 +4,36 @@ import ring from "../assets/ring.wav";
 
 type Props = {};
 const Notifications = (props: Props) => {
-	const { answerCall, call, callAccepted } = useContext(SocketContext) as SocketContextProps;
+	const { answerCall, setCall, call, callAccepted } = useContext(SocketContext) as SocketContextProps;
 	const audioRef = useRef<null | HTMLAudioElement>(null);
 
 	useEffect(() => {
-		if (audioRef.current) {
-			audioRef.current.volume = 0.5;
+		if (call?.isReceivedCall && audioRef.current) {
+			audioRef.current.volume = 0.3;
+			audioRef.current.play();
 		}
-	}, []);
+	}, [call?.isReceivedCall]);
+
+	const handleAnswerCall = () => {
+		answerCall();
+		if (audioRef.current) {
+			audioRef.current.pause();
+		}
+	};
+
+	const handleReject = () => {
+		//todo add proper reject
+		if (audioRef.current) {
+			audioRef.current.pause();
+			setCall(null);
+		}
+	};
 
 	return (
 		<>
+			<audio src={ring} ref={audioRef} />
 			{call?.isReceivedCall && !callAccepted && (
 				<div className="alert shadow-lg mb-8 mt-2">
-					<audio src={ring} ref={audioRef} autoPlay />
 					<div>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info flex-shrink-0 w-6 h-6">
 							<path
@@ -31,7 +47,10 @@ const Notifications = (props: Props) => {
 						</div>
 					</div>
 					<div className="flex-none">
-						<button className="btn btn-sm" onClick={answerCall}>
+						<button className="btn btn-error btn-sm" onClick={handleReject}>
+							Reject
+						</button>
+						<button className="btn btn-sm" onClick={handleAnswerCall}>
 							Pick Up
 						</button>
 					</div>

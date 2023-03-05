@@ -9,6 +9,13 @@ export interface User {
 	name?: string;
 }
 
+interface Call {
+	isReceivedCall: boolean;
+	from: string;
+	name: string;
+	signal: any;
+}
+
 export interface SocketContextProps {
 	call: {
 		isReceivedCall: boolean;
@@ -28,6 +35,7 @@ export interface SocketContextProps {
 	leaveCall: () => void;
 	answerCall: () => void;
 	activeUsers: User[];
+	setCall: React.Dispatch<React.SetStateAction<Call | null>>;
 }
 
 export const SocketContext = createContext<SocketContextProps | null>(null);
@@ -35,7 +43,7 @@ export const SocketContext = createContext<SocketContextProps | null>(null);
 const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [mediaStream, setMediaStream] = useState<null | MediaStream>(null);
 	const [myId, setMyId] = useState<string>("");
-	const [call, setCall] = useState<{ isReceivedCall: boolean; from: string; name: string; signal: any } | null>(null);
+	const [call, setCall] = useState<Call | null>(null);
 	const [callAccepted, setCallAccepted] = useState<boolean>(false);
 	const [callEnded, setCallEnded] = useState<boolean>(false);
 	const [name, setName] = useState<string>("");
@@ -136,6 +144,7 @@ const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 				leaveCall,
 				answerCall,
 				activeUsers,
+				setCall,
 			}}>
 			{children}
 		</SocketContext.Provider>
