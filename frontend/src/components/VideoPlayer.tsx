@@ -33,7 +33,6 @@ const VideoPlayer = (props: Props) => {
 						}}
 						playsInline
 						autoPlay
-						muted
 						width="640"
 						height="480"
 					/>
