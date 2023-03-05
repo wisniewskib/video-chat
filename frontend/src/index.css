@@ -18,3 +18,7 @@ body {
   background-image: url('bg.jpg');
   background-size:cover;
 }
+
+.video-container{
+  max-height:435px;
+}

@@ -1,14 +1,19 @@
 import { useContext, useState } from "react";
 import { SocketContext, SocketContextProps } from "../context/SocketContext";
 
-const Options = () => {
+type Props = {
+	idToCall?: string;
+	setIdToCall: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const Options = ({ idToCall, setIdToCall }: Props) => {
 	const [myName, setMyName] = useState<string>("");
-	const [idToCall, setIdToCall] = useState<string>("");
+
 	const { myId, callAccepted, callEnded, leaveCall, handleNameChange, callUser, activeUsers } = useContext(SocketContext) as SocketContextProps;
 
 	return (
-		<div className="w-96">
-			<div className="form-control">
+		<div className="flex ">
+			<div className="form-control w-96 mr-2">
 				<label className="input-group" htmlFor="name">
 					<span>Name</span>
 					<input className="input input-bordered w-full" type="text" id="name" onChange={(e) => setMyName(e.target.value)} />
@@ -18,22 +23,7 @@ const Options = () => {
 				</button>
 			</div>
 			<br />
-			<h3 className="text-center mb-2 text-lg">Select user and click "Call" </h3>
-			<ul className="menu bg-base-100 rounded-box">
-				{activeUsers.map(
-					({ id, name }) =>
-						id !== myId && (
-							<li key={id} onClick={() => setIdToCall(id)}>
-								<a>
-									{name || "Anonymous User"}
-									<span className="text-xs text-gray-400">{id}</span>
-								</a>
-							</li>
-						)
-				)}
-			</ul>
-			<br />
-			<div className="form-control">
+			<div className="form-control w-96">
 				<label className="input-group" htmlFor="id-to-call">
 					<span>Recipient</span>
 					<input
@@ -49,7 +39,7 @@ const Options = () => {
 						Leave call
 					</button>
 				) : (
-					<button className="btn btn-success mt-2" onClick={() => callUser(idToCall)}>
+					<button className="btn btn-success mt-2" onClick={() => idToCall && callUser(idToCall)}>
 						Call
 					</button>
 				)}

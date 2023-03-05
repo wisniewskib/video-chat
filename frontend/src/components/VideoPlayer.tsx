@@ -41,7 +41,7 @@ const VideoPlayer = (props: Props) => {
 
 	return (
 		<div className="flex mb-8">
-			<div className={`card w-96 bg-base-100 shadow-xl ${callAccepted && "mr-4"}`}>
+			<div className={`card w-96 bg-base-100 shadow-xl ${callAccepted && "mr-4"} mr-2`}>
 				<div className="card-body items-center ">
 					<h3 className="mb-4 text-2xl">{name || "Your Video"}</h3>
 					{myVideoElement}
