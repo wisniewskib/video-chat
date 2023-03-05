@@ -26,4 +26,3 @@ frontend/*.sw?
 
 server/node_modules
 server/dist
-server/.firebaserc

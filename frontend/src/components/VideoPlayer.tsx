@@ -37,7 +37,7 @@ const VideoPlayer = (props: Props) => {
 						width="640"
 						height="480"
 					/>
-					<div className="absolute bottom-2 right-2 w-32 shadow-md">{myVideoElement}</div>
+					<div className="absolute bottom-2 right-2 w-32 shadow-md small-video-mobile">{myVideoElement}</div>
 				</div>
 			);
 		}

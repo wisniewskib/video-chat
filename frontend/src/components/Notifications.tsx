@@ -16,7 +16,7 @@ const Notifications = (props: Props) => {
 	return (
 		<>
 			{call?.isReceivedCall && !callAccepted && (
-				<div className="alert shadow-lg mb-8">
+				<div className="alert shadow-lg mb-8 mt-2">
 					<audio src={ring} ref={audioRef} autoPlay />
 					<div>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info flex-shrink-0 w-6 h-6">
