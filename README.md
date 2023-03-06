@@ -1,6 +1,6 @@
 # Video Chat WebRTC
 
-This is a simple video chat application built using Node.js, Express, TypeScript, Socket.IO on the backend, and Vite, TypeScript, React, Simple-Peer on the frontend. The backend of the application is hosted on Render, while the frontend is hosted on Netlify.
+This is a simple video chat application built using Node.js, Express, TypeScript, Socket.IO on the backend, and Vite, TypeScript, React, Tailwind, DaisyUI Simple-Peer on the frontend. The backend of the application is hosted on Render, while the frontend is hosted on Netlify.
 
 ## Usage
 
@@ -34,3 +34,5 @@ We would like to thank the following resources for their help in creating this p
 - [Simple-Peer](https://github.com/feross/simple-peer)
 - [Render](https://render.com/)
 - [Netlify](https://www.netlify.com/)
+- [TailwindCSS](https://v2.tailwindcss.com/)
+- [daisyUI](https://daisyui.com/)
