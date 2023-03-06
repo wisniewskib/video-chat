@@ -1,4 +1,4 @@
-# Video Chat App
+# Video Chat WebRTC
 
 This is a simple video chat application built using Node.js, Express, TypeScript, Socket.IO on the backend, and Vite, TypeScript, React, Simple-Peer on the frontend. The backend of the application is hosted on Render, while the frontend is hosted on Netlify.
 
